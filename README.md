@@ -4,11 +4,11 @@ Run CloudEvents through WSGI
 ## Example Problem
 How do we use Django (or any WSGI compatible framework) to handle events?
 
-_Could be
+_Events could be_
 * CloudEvents from CNCF - https://cloudevents.io/
-* AWS, Google, Azure events too_
+* AWS, Google, Azure events too
 
-Django is tied to the web. CloudEvents are part of that but do not share the same expressions.
+Django is tied to the web, really HTTP. CloudEvents are part of that but do not share the same expressions.
 
 ### Examples:
 ```
