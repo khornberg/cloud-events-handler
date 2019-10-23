@@ -46,3 +46,67 @@ So, can we take an AWS event, in a generic way, and send it through to Django vi
 I think so.
 
 **This is a work in progress.**
+
+## Flow
+```
+
+
+
+                     +------------------+
+                     |                  |
+                     |  Event Producer  |
+                     |                  |
+                     +------------------+
+                               |
+                               |
+                               |
+                               |
+                               |
+         +---------------------v---------------------+
+         |                                           |
+         |              Event Consumer               |
+         |                                           |
+         |                                           |
+         |                                           |
+         |                                           |
+         |          +---------------------+          |
+         |          |Handler              |          |
+         |          |                     |          |
+         |          |Any compute that     |          |
+         |          |handles/processes the|          |
+         |          |event                |          |
+         |          |                     |          |
+         |          +---------------------+          |
+         |                     |                     |
+         |                     v                     |
+         |          +---------------------+          |
+         |          |Adapter              |          |
+         |          |                     |          |
+         |          |Adapts events into   |          |
+         |          |CloudEvents format   |          |
+         |          |                     |          |
+         |          +---------------------+          |
+         |                     |                     |
+         |                     |                     |
+         |                     v                     |
+         |          +---------------------+          |
+         |          |Interface            |          |
+         |          |                     |          |
+         |          |Interfaces for WSGI  |          |
+         |          |                     |          |
+         |          +---------------------+          |
+         |                     |                     |
+         |                     |                     |
+         |                     v                     |
+         |          +---------------------+          |
+         |          |Application          |          |
+         |          |                     |          |
+         |          |Any WSGI application |          |
+         |          |                     |          |
+         |          +---------------------+          |
+         |                                           |
+         |                                           |
+         +-------------------------------------------+
+
+
+```
