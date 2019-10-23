@@ -8,4 +8,5 @@ flake8>=3.7.8
 pytest-django>=3.5.1
 tox>=3.14.0
 
-werkzeug
+werkzeug>=0.16.0
+pytest-mock>=1.11.2
