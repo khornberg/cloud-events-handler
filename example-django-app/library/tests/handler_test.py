@@ -5,14 +5,13 @@ from library.handler import handler
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):
-    headers = dict(response["headers"])
+    headers = response["headers"]
     assert response["status_code"] == expected_status_code
     if headers.get("Content-Type") in ["application/json"]:
         assert json.loads(response["body"]) == expected_body
     else:
         assert response["body"] == expected_body
     if kwargs.get("expected_headers"):
-        print(headers)
         assert headers == kwargs.get("expected_headers")
 
 
@@ -83,3 +82,8 @@ def test_wsgi_with_headers(mocker):
         "Content-Length": "132",
     }
     assert_response(handler(event, context), expected, expected_headers=expected_headers)
+
+
+def test_handler_response_is_json_compatible():
+    os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
+    assert json.dumps(handler(event, context))

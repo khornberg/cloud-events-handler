@@ -48,5 +48,5 @@ def handler(event, context):
     return {
         "status_code": response.status_code,
         "body": response.get_data(as_text=True),
-        "headers": response.headers,
+        "headers": dict(response.headers),
     }
