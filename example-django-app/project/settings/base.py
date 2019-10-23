@@ -6,7 +6,7 @@ SECRET_KEY = "@bt#!seg+kv@$7#ieq20ieq20ieq20ieq20ieq20ieq20ieq20ieq2002m@=@up1a&
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 INSTALLED_APPS = [
     "library",
