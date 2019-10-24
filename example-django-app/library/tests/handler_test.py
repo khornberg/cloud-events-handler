@@ -2,6 +2,7 @@ import os
 import json
 import library
 from library.handler import handler
+import pytest
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):
@@ -19,7 +20,7 @@ event = {}
 context = {}
 default_wsgi_environ = {
     "REQUEST_METHOD": "get",
-    "PATH": "/books/",
+    "PATH_INFO": "/books/",
     "wsgi.input": None,
     "SERVER_NAME": "localhost",
     "SERVER_PORT": "80",
@@ -32,11 +33,14 @@ default_wsgi_environ = {
 }
 
 
-def test_handler():
+def test_handler(mocker):
+    mocker.patch("library.handler.get_wsgi_environ")
+    environ = default_wsgi_environ.copy()
+    library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "wsgiref.simple_server.demo_app"
     expected = """Hello world!
 
-PATH = '/books/'
+PATH_INFO = '/books/'
 REQUEST_METHOD = 'get'
 SERVER_NAME = 'localhost'
 SERVER_PORT = '80'
@@ -51,39 +55,38 @@ wsgi.version = (1, 0)
     assert_response(handler(event, context), expected)
 
 
-def test_handler_with_django():
+@pytest.mark.django_db
+def test_handler_with_django(mocker):
+    mocker.patch("library.handler.get_wsgi_environ")
+    environ = default_wsgi_environ.copy()
+    library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
-    expected = {
-        "authors": "http://localhost/authors/",
-        "books": "http://localhost/books/",
-        "paper-sources": "http://localhost/paper-sources/",
-    }
+    expected = []
     assert_response(handler(event, context), expected)
 
 
+@pytest.mark.django_db
 def test_wsgi_with_headers(mocker):
     mocker.patch("library.handler.get_wsgi_environ")
     environ = default_wsgi_environ.copy()
     environ.update({"HTTP_ACCEPT": "application/vnd.api+json"})
     library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
-    expected = json.dumps({
-        "data": {
-            "authors": "http://localhost/authors/",
-            "books": "http://localhost/books/",
-            "paper-sources": "http://localhost/paper-sources/",
-        }
-    }).replace(' ', '')
+    expected = json.dumps({"data": []}).replace(" ", "")
     expected_headers = {
         "Content-Type": "application/vnd.api+json",
         "Vary": "Accept, Cookie",
-        "Allow": "GET, HEAD, OPTIONS",
+        "Allow": "GET, POST, HEAD, OPTIONS",
         "X-Frame-Options": "SAMEORIGIN",
-        "Content-Length": "132",
+        "Content-Length": "11",
     }
     assert_response(handler(event, context), expected, expected_headers=expected_headers)
 
 
-def test_handler_response_is_json_compatible():
+@pytest.mark.django_db
+def test_handler_response_is_json_compatible(mocker):
+    mocker.patch("library.handler.get_wsgi_environ")
+    environ = default_wsgi_environ.copy()
+    library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     assert json.dumps(handler(event, context))
