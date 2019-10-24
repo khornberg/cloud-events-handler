@@ -1,0 +1,14 @@
+graft src
+graft tests
+graft requirements
+
+include .coveragerc
+
+include README.md
+include tox.ini
+include *.json
+include *.sh
+include *.toml
+include *.cfg
+
+global-exclude *.py[cod] __pycache__ *.so *.dylib .github .github/*

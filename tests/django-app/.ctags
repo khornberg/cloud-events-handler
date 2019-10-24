@@ -1,0 +1,130 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+0001_initial.py	library/migrations/0001_initial.py	1;"	F
+ALLOWED_HOSTS	project/settings/base.py	/^ALLOWED_HOSTS = []$/;"	v
+AUTH_PASSWORD_VALIDATORS	project/settings/base.py	/^AUTH_PASSWORD_VALIDATORS = [$/;"	v
+Author	library/models.py	/^class Author(models.Model):$/;"	c
+AuthorSerializer	library/serializers.py	/^class AuthorSerializer(serializers.ModelSerializer):$/;"	c
+AuthorViewSet	library/views.py	/^class AuthorViewSet(viewsets.ModelViewSet):$/;"	c
+BASE_DIR	project/settings/base.py	/^BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))$/;"	v
+Book	library/models.py	/^class Book(models.Model):$/;"	c
+BookSerializer	library/serializers.py	/^class BookSerializer(serializers.ModelSerializer):$/;"	c
+BookViewSet	library/views.py	/^class BookViewSet(viewsets.ModelViewSet):$/;"	c
+DATABASES	project/settings/app.py	/^DATABASES = {$/;"	v
+DATABASES	project/settings/base.py	/^DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": os.path.join(BASE_DIR, "db.sqlite3")}}$/;"	v
+DEBUG	project/settings/app.py	/^DEBUG = False$/;"	v
+DEBUG	project/settings/base.py	/^DEBUG = True$/;"	v
+INSTALLED_APPS	project/settings/base.py	/^INSTALLED_APPS = [$/;"	v
+JSON_API_FORMAT_TYPES	project/settings/base.py	/^JSON_API_FORMAT_TYPES = "dasherize"$/;"	v
+JSON_API_PLURALIZE_TYPES	project/settings/base.py	/^JSON_API_PLURALIZE_TYPES = True$/;"	v
+LANGUAGE_CODE	project/settings/base.py	/^LANGUAGE_CODE = "en-us"$/;"	v
+MIDDLEWARE	project/settings/base.py	/^MIDDLEWARE = [$/;"	v
+Meta	library/serializers.py	/^    class Meta:$/;"	c	class:AuthorSerializer
+Meta	library/serializers.py	/^    class Meta:$/;"	c	class:BookSerializer
+Meta	library/serializers.py	/^    class Meta:$/;"	c	class:PaperSourceSerializer
+Migration	library/migrations/0001_initial.py	/^class Migration(migrations.Migration):$/;"	c
+PaperSource	library/models.py	/^class PaperSource(models.Model):$/;"	c
+PaperSourceSerializer	library/serializers.py	/^class PaperSourceSerializer(serializers.ModelSerializer):$/;"	c
+PaperSourceViewSet	library/views.py	/^class PaperSourceViewSet(viewsets.ModelViewSet):$/;"	c
+REST_FRAMEWORK	project/settings/base.py	/^REST_FRAMEWORK = {$/;"	v
+ROOT_URLCONF	project/settings/base.py	/^ROOT_URLCONF = "project.urls"$/;"	v
+SECRET_KEY	project/settings/base.py	/^SECRET_KEY = "@bt#!seg+kv@$7#ieq20ieq20ieq20ieq20ieq20ieq20ieq20ieq2002m@=@up1a&w^ugd$c9%ma(4gfuak$"$/;"	v
+STATIC_URL	project/settings/base.py	/^STATIC_URL = "\/static\/"$/;"	v
+TEMPLATES	project/settings/base.py	/^TEMPLATES = [$/;"	v
+TIME_ZONE	project/settings/base.py	/^TIME_ZONE = "UTC"$/;"	v
+TestAuthor	library/tests/json_test.py	/^class TestAuthor(TestCase):$/;"	c
+TestBook	library/tests/json_api_tests.py	/^class TestBook(TestCase):$/;"	c
+TestBook	library/tests/json_test.py	/^class TestBook(TestCase):$/;"	c
+TestMyApp	library/tests/your_test.py	/^class TestMyApp(TestCase):$/;"	c
+USE_I18N	project/settings/base.py	/^USE_I18N = True$/;"	v
+USE_L10N	project/settings/base.py	/^USE_L10N = True$/;"	v
+USE_TZ	project/settings/base.py	/^USE_TZ = True$/;"	v
+WSGI_APPLICATION	project/settings/base.py	/^WSGI_APPLICATION = "project.wsgi.application"$/;"	v
+__init__.py	library/__init__.py	1;"	F
+__init__.py	library/migrations/__init__.py	1;"	F
+__init__.py	library/tests/__init__.py	1;"	F
+__init__.py	project/__init__.py	1;"	F
+__init__.py	project/settings/__init__.py	1;"	F
+admin.py	library/admin.py	1;"	F
+app	cloud-event-gateway.py	/^app = get_wsgi_application()$/;"	v
+app.py	project/settings/app.py	1;"	F
+application	project/wsgi.py	/^application = get_wsgi_application()$/;"	v
+apps.py	library/apps.py	1;"	F
+author	library/models.py	/^    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True)$/;"	v	class:Book
+base.py	project/settings/base.py	1;"	F
+cloud-event-gateway.py	cloud-event-gateway.py	1;"	F
+company	library/models.py	/^    company = models.TextField()$/;"	v	class:PaperSource
+dependencies	library/migrations/0001_initial.py	/^    dependencies = [$/;"	v	class:Migration
+environ	cloud-event-gateway.py	/^environ = {$/;"	v
+fields	library/migrations/0001_initial.py	/^            fields=[$/;"	v	class:Migration
+fields	library/serializers.py	/^        fields = "__all__"$/;"	v	class:AuthorSerializer.Meta
+fields	library/serializers.py	/^        fields = "__all__"$/;"	v	class:BookSerializer.Meta
+fields	library/serializers.py	/^        fields = "__all__"$/;"	v	class:PaperSourceSerializer.Meta
+first_name	library/models.py	/^    first_name = models.TextField()$/;"	v	class:Author
+get_queryset	library/views.py	/^    def get_queryset(self):$/;"	m	class:AuthorViewSet
+get_queryset	library/views.py	/^    def get_queryset(self):$/;"	m	class:BookViewSet
+get_queryset	library/views.py	/^    def get_queryset(self):$/;"	m	class:PaperSourceViewSet
+get_wsgi_response	cloud-event-gateway.py	/^def get_wsgi_response():$/;"	f
+handler	cloud-event-gateway.py	/^def handler(event, context):$/;"	f
+handler	library/handler.py	/^def handler(event, context):$/;"	f
+handler.py	library/handler.py	1;"	F
+included_serializers	library/serializers.py	/^    included_serializers = {"author": AuthorSerializer}$/;"	v	class:BookSerializer
+initial	library/migrations/0001_initial.py	/^    initial = True$/;"	v	class:Migration
+json_api_tests.py	library/tests/json_api_tests.py	1;"	F
+json_test.py	library/tests/json_test.py	1;"	F
+last_name	library/models.py	/^    last_name = models.TextField()$/;"	v	class:Author
+libraryConfig	library/apps.py	/^class libraryConfig(AppConfig):$/;"	c
+manage.py	manage.py	1;"	F
+model	library/serializers.py	/^        model = Author$/;"	v	class:AuthorSerializer.Meta
+model	library/serializers.py	/^        model = Book$/;"	v	class:BookSerializer.Meta
+model	library/serializers.py	/^        model = PaperSource$/;"	v	class:PaperSourceSerializer.Meta
+models.py	library/models.py	1;"	F
+name	library/apps.py	/^    name = "library"$/;"	v	class:libraryConfig
+name	library/migrations/0001_initial.py	/^            name='Author',$/;"	v	class:Migration
+name	library/migrations/0001_initial.py	/^            name='Book',$/;"	v	class:Migration
+name	library/migrations/0001_initial.py	/^            name='PaperSource',$/;"	v	class:Migration
+name	library/models.py	/^    name = models.TextField()$/;"	v	class:Book
+operations	library/migrations/0001_initial.py	/^    operations = [$/;"	v	class:Migration
+published	library/models.py	/^    published = models.DateField()$/;"	v	class:Book
+router	library/urls.py	/^router = routers.DefaultRouter()$/;"	v
+serializer_class	library/views.py	/^    serializer_class = AuthorSerializer$/;"	v	class:AuthorViewSet
+serializer_class	library/views.py	/^    serializer_class = BookSerializer$/;"	v	class:BookViewSet
+serializer_class	library/views.py	/^    serializer_class = PaperSourceSerializer$/;"	v	class:PaperSourceViewSet
+serializers.py	library/serializers.py	1;"	F
+test_add_relationship_to_a_book	library/tests/json_api_tests.py	/^    def test_add_relationship_to_a_book(self):$/;"	m	class:TestBook
+test_create_a_author	library/tests/json_test.py	/^    def test_create_a_author(self):$/;"	m	class:TestAuthor
+test_create_a_book	library/tests/json_api_tests.py	/^    def test_create_a_book(self):$/;"	m	class:TestBook
+test_create_a_book	library/tests/json_test.py	/^    def test_create_a_book(self):$/;"	m	class:TestBook
+test_delete_a_author	library/tests/json_test.py	/^    def test_delete_a_author(self):$/;"	m	class:TestAuthor
+test_delete_a_book	library/tests/json_api_tests.py	/^    def test_delete_a_book(self):$/;"	m	class:TestBook
+test_delete_a_book	library/tests/json_test.py	/^    def test_delete_a_book(self):$/;"	m	class:TestBook
+test_get_a_author	library/tests/json_test.py	/^    def test_get_a_author(self):$/;"	m	class:TestAuthor
+test_get_a_book	library/tests/json_api_tests.py	/^    def test_get_a_book(self):$/;"	m	class:TestBook
+test_get_a_book	library/tests/json_test.py	/^    def test_get_a_book(self):$/;"	m	class:TestBook
+test_get_authors	library/tests/json_test.py	/^    def test_get_authors(self):$/;"	m	class:TestAuthor
+test_get_books	library/tests/json_api_tests.py	/^    def test_get_books(self):$/;"	m	class:TestBook
+test_get_books	library/tests/json_test.py	/^    def test_get_books(self):$/;"	m	class:TestBook
+test_get_dasherized_type	library/tests/json_api_tests.py	/^    def test_get_dasherized_type(self):$/;"	m	class:TestBook
+test_get_included	library/tests/json_api_tests.py	/^    def test_get_included(self):$/;"	m	class:TestBook
+test_get_something_that_does_not_exist	library/tests/json_api_tests.py	/^    def test_get_something_that_does_not_exist(self):$/;"	m	class:TestBook
+test_get_something_that_does_not_exist	library/tests/json_test.py	/^    def test_get_something_that_does_not_exist(self):$/;"	m	class:TestBook
+test_pass	library/tests/your_test.py	/^    def test_pass(self):$/;"	m	class:TestMyApp
+test_pass	library/tests/your_test.py	/^def test_pass():$/;"	f
+test_update_a_author	library/tests/json_test.py	/^    def test_update_a_author(self):$/;"	m	class:TestAuthor
+test_update_a_book	library/tests/json_api_tests.py	/^    def test_update_a_book(self):$/;"	m	class:TestBook
+test_update_a_book	library/tests/json_test.py	/^    def test_update_a_book(self):$/;"	m	class:TestBook
+test_use_sorting	library/tests/json_api_tests.py	/^    def test_use_sorting(self):$/;"	m	class:TestBook
+test_use_sorting_descending	library/tests/json_api_tests.py	/^    def test_use_sorting_descending(self):$/;"	m	class:TestBook
+test_use_sparse_fieldset	library/tests/json_api_tests.py	/^    def test_use_sparse_fieldset(self):$/;"	m	class:TestBook
+urlpatterns	library/urls.py	/^urlpatterns = [path("", include(router.urls))]$/;"	v
+urlpatterns	project/urls.py	/^urlpatterns = [path("admin\/", admin.site.urls), path("", include("library.urls"))]$/;"	v
+urls.py	library/urls.py	1;"	F
+urls.py	project/urls.py	1;"	F
+v	cloud-event-gateway.py	/^v = views.BookViewSet()$/;"	v
+views.py	library/views.py	1;"	F
+wsgi.py	project/wsgi.py	1;"	F
+your_test.py	library/tests/your_test.py	1;"	F
