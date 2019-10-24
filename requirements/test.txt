@@ -1,0 +1,7 @@
+black>=18.6b4
+isort>=4.3.21
+flake8>=3.7.8
+tox>=3.14.0
+pytest>=3.0.7
+pytest-django>=3.5.1
+pytest-cov>=2.7.1

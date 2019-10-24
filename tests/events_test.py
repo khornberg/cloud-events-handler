@@ -2,7 +2,7 @@ import json
 import os
 
 import pytest
-from library.handler import handler
+from cloud_events.handler import handler
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):
@@ -15,6 +15,8 @@ def assert_response(response, expected_body="", expected_status_code=200, **kwar
     if kwargs.get("expected_headers"):
         assert headers == kwargs.get("expected_headers")
 
+
+django_app = "tests.django-app.project.wsgi.application"
 
 s3_example_event = {
     "Records": [
@@ -75,7 +77,7 @@ cloudevents = {
 
 @pytest.mark.django_db
 def test_aws_s3_file_added_event():
-    os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
+    os.environ["WSGI_APPLICATION"] = django_app
     event = expected = s3_example_event
     expected_headers = {
         "Content-Type": "application/json",
@@ -90,6 +92,6 @@ def test_aws_s3_file_added_event():
 @pytest.mark.django_db
 @pytest.mark.parametrize("event_payload", [s3_example_event, eventbridge_scheduled_example_event, cloudevents])
 def test_events(event_payload):
-    os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
+    os.environ["WSGI_APPLICATION"] = django_app
     event = expected = event_payload
     assert_response(handler(event, {}), expected, 201)
