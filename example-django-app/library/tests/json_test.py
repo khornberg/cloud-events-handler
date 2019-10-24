@@ -82,3 +82,10 @@ class TestAuthor(TestCase):
         response = self.client.delete(f"/authors/{author.id}/")
         self.assertEqual(204, response.status_code)
         self.assertEqual(b"", response.content)
+
+
+class TestBookDelievery(TestCase):
+    def test_book_delievery(self):
+        response = self.client.post("/book/delievery/", data={"blah": 1234})
+        self.assertEqual(201, response.status_code)
+        self.assertEqual({"blah": "1234"}, json.loads(response.content))
