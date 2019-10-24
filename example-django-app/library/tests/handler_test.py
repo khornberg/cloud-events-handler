@@ -11,56 +11,28 @@ def assert_response(response, expected_body="", expected_status_code=200, **kwar
     assert response["status_code"] == expected_status_code
     if headers.get("Content-Type") in ["application/json"]:
         assert json.loads(response["body"]) == expected_body
-    else:
-        assert response["body"] == expected_body
     if kwargs.get("expected_headers"):
         assert headers == kwargs.get("expected_headers")
 
 
 event = {}
 context = {}
-default_wsgi_environ = {
-    "REQUEST_METHOD": "get",
-    "PATH_INFO": "/books/",
-    "wsgi.input": None,
-    "SERVER_NAME": "localhost",
-    "SERVER_PORT": "80",
-    "SERVER_PROTOCOL": str("HTTP/1.1"),
-    "wsgi.version": (1, 0),
-    "wsgi.run_once": False,
-    "wsgi.multiprocess": False,
-    "wsgi.multithread": False,
-    "wsgi.url_scheme": "http",
-}
+environ = {"TEST": "Thing"}
+environ_headers = {"HTTP_ACCEPT": "application/vnd.api+json", "PATH_INFO": "/books/", "REQUEST_METHOD": "get"}
+django_environ = {"PATH_INFO": "/books/", "REQUEST_METHOD": "get"}
 
 
 def test_handler(mocker):
-    mocker.patch("library.handler.get_wsgi_environ")
-    environ = default_wsgi_environ.copy()
-    library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "wsgiref.simple_server.demo_app"
-    expected = """Hello world!
-
-PATH_INFO = '/books/'
-REQUEST_METHOD = 'get'
-SERVER_NAME = 'localhost'
-SERVER_PORT = '80'
-SERVER_PROTOCOL = 'HTTP/1.1'
-wsgi.input = None
-wsgi.multiprocess = False
-wsgi.multithread = False
-wsgi.run_once = False
-wsgi.url_scheme = 'http'
-wsgi.version = (1, 0)
-"""
-    assert_response(handler(event, context), expected)
+    expected = "Hello world!"
+    response = handler(event, context)
+    assert_response(response)
+    assert response["body"].startswith(expected)
 
 
 @pytest.mark.django_db
 def test_handler_with_django(mocker):
-    mocker.patch("library.handler.get_wsgi_environ")
-    environ = default_wsgi_environ.copy()
-    library.handler.get_wsgi_environ.return_value = environ
+    os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.django_environ"
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     expected = []
     assert_response(handler(event, context), expected)
@@ -68,10 +40,7 @@ def test_handler_with_django(mocker):
 
 @pytest.mark.django_db
 def test_wsgi_with_headers(mocker):
-    mocker.patch("library.handler.get_wsgi_environ")
-    environ = default_wsgi_environ.copy()
-    environ.update({"HTTP_ACCEPT": "application/vnd.api+json"})
-    library.handler.get_wsgi_environ.return_value = environ
+    os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ_headers"
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     expected = json.dumps({"data": []}).replace(" ", "")
     expected_headers = {
@@ -86,8 +55,33 @@ def test_wsgi_with_headers(mocker):
 
 @pytest.mark.django_db
 def test_handler_response_is_json_compatible(mocker):
-    mocker.patch("library.handler.get_wsgi_environ")
-    environ = default_wsgi_environ.copy()
-    library.handler.get_wsgi_environ.return_value = environ
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     assert json.dumps(handler(event, context))
+
+
+def test_get_user_environ_as_attribute():
+    os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ"
+    assert library.handler.get_user_environ() == {"TEST": "Thing"}
+
+
+def test_get_wsgi_environ():
+    event = {"my": "event"}
+    os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ"
+    environ = library.handler.get_wsgi_environ(event)
+    environ.pop('wsgi.input')  # this is a BytesIO object
+    assert environ == {
+        "CONTENT_LENGTH": 15,
+        "CONTENT_TYPE": "application/json",
+        "PATH_INFO": "/",
+        "REQUEST_METHOD": "post",
+        "SCRIPT_NAME": "",
+        "SERVER_NAME": "localhost",
+        "SERVER_PORT": "80",
+        "SERVER_PROTOCOL": "HTTP/1.1",
+        "TEST": "Thing",
+        "wsgi.multiprocess": False,
+        "wsgi.multithread": False,
+        "wsgi.run_once": False,
+        "wsgi.url_scheme": "http",
+        "wsgi.version": (1, 0),
+    }
