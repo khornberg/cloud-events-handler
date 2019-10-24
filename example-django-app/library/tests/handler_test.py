@@ -68,7 +68,7 @@ def test_get_wsgi_environ():
     event = {"my": "event"}
     os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ"
     environ = library.handler.get_wsgi_environ(event)
-    environ.pop('wsgi.input')  # this is a BytesIO object
+    environ.pop("wsgi.input")  # this is a BytesIO object
     assert environ == {
         "CONTENT_LENGTH": 15,
         "CONTENT_TYPE": "application/json",

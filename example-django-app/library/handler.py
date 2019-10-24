@@ -6,9 +6,18 @@ from importlib import import_module
 from werkzeug.wrappers import Response
 
 
+def get_path_for_event(event):
+    path = ""
+    if event.get("Records") and event["Records"][0].get("eventSource"):
+        path = event["Records"][0].get("eventSource").replace(":", ".")
+    return "/{}".format(path)
+
+
 def get_user_environ():
     app_path = os.environ.get("WSGI_ENVIRON")
-    return import_string(app_path)
+    if app_path:
+        return import_string(app_path)
+    return {}
 
 
 def get_wsgi_environ(event):
@@ -28,10 +37,12 @@ def get_wsgi_environ(event):
         "wsgi.url_scheme": "http",
     }
     environ = {**default_environ, **get_user_environ()}
-    if environ['REQUEST_METHOD'].lower() == 'post':
+    if environ["REQUEST_METHOD"].lower() == "post":
         event_bytes = str.encode(json.dumps(event))
         environ["CONTENT_LENGTH"] = len(event_bytes)
         environ["wsgi.input"] = io.BytesIO(event_bytes)
+    if event:
+        environ["PATH_INFO"] = get_path_for_event(event)
     return environ
 
 
