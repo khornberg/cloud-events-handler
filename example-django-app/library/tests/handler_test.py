@@ -1,8 +1,9 @@
-import os
 import json
+import os
+
 import library
-from library.handler import handler
 import pytest
+from library.handler import handler
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):

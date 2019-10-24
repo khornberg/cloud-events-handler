@@ -2,6 +2,7 @@ import io
 import json
 import os
 from importlib import import_module
+
 from werkzeug.wrappers import Response
 
 
@@ -24,7 +25,7 @@ def get_wsgi_environ(event):
         "wsgi.url_scheme": "http",
     }
     # s3
-    if event.get('Records'):
+    if event.get("Records"):
         return s3_wsgi_environ
 
 
