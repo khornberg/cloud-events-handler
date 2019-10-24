@@ -10,7 +10,9 @@ def get_path_for_event(event):
     path = ""
     if event.get("Records") and event["Records"][0].get("eventSource"):
         path = event["Records"][0].get("eventSource").replace(":", ".")
-    return "/{}".format(path)
+    if event.get("source"):
+        path = event.get("source")
+    return "/{}".format(path.replace('/', '', 1))
 
 
 def get_user_environ():

@@ -22,7 +22,7 @@ environ_headers = {"HTTP_ACCEPT": "application/vnd.api+json", "PATH_INFO": "/boo
 django_environ = {"PATH_INFO": "/books/", "REQUEST_METHOD": "get"}
 
 
-def test_handler(mocker):
+def test_handler():
     os.environ["WSGI_APPLICATION"] = "wsgiref.simple_server.demo_app"
     expected = "Hello world!"
     response = handler(event, context)
@@ -31,7 +31,7 @@ def test_handler(mocker):
 
 
 @pytest.mark.django_db
-def test_handler_with_django(mocker):
+def test_handler_with_django():
     os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.django_environ"
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     expected = []
@@ -39,7 +39,7 @@ def test_handler_with_django(mocker):
 
 
 @pytest.mark.django_db
-def test_wsgi_with_headers(mocker):
+def test_wsgi_with_headers():
     os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ_headers"
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     expected = json.dumps({"data": []}).replace(" ", "")
@@ -54,7 +54,7 @@ def test_wsgi_with_headers(mocker):
 
 
 @pytest.mark.django_db
-def test_handler_response_is_json_compatible(mocker):
+def test_handler_response_is_json_compatible():
     os.environ["WSGI_APPLICATION"] = "project.wsgi.application"
     assert json.dumps(handler(event, context))
 
@@ -85,3 +85,11 @@ def test_get_wsgi_environ():
         "wsgi.url_scheme": "http",
         "wsgi.version": (1, 0),
     }
+
+
+@pytest.mark.parametrize(
+    "event,expected", [({"source": "a"}, "/a"), ({"source": "/a"}, "/a"), ({"source": "/a/b"}, "/a/b")]
+)
+def test_get_path_for_event(event, expected):
+    os.environ["WSGI_ENVIRON"] = "library.tests.handler_test.environ"
+    assert library.handler.get_path_for_event(event) == expected

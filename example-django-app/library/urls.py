@@ -12,4 +12,6 @@ urlpatterns = [
     path("", include(router.urls)),
     path(r"book/delievery/", views.BookDelievery.as_view()),
     path(r"aws.s3", views.BookDelievery.as_view()),
+    path(r"aws.events", views.BookDelievery.as_view()),
+    path(r"my/context", views.BookDelievery.as_view()),
 ]
