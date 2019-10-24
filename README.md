@@ -1,5 +1,5 @@
-# cloud-events-gateway
-Run CloudEvents through WSGI
+# cloud-events-handler
+Send CloudEvents (and AWS Events) to a WSGI application
 
 ## Example Problem
 How do we use Django (or any WSGI compatible framework) to handle events?
