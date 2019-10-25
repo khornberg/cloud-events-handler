@@ -133,15 +133,15 @@ The default handler returns a dictionary.
 | Event            | Path Attribute                                      | WSGI Path        |
 | ---------------- | --------------------------------------------------- | ---------------- |
 | CloudEvent       | `$.source`                                          | `/myContext`     |
-| AWS EventBridge  | `$.source`                                          | `com.my.event`   |
-| AWS S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `aws.s3`         |
-| CloudWatch Event | `$.source`                                          | `com.my.event`   |
-| AWS CodeCommit   | `$.Records[0].eventSource`                          | `aws.codecommit` |
-| DynamoDB         | `$.Records[0].eventSource`                          | `aws.dynamodb`   |
-| EC2 Lifecycle    | `$.source`                                          | `aws.ec2`        |
-| Kinesis          | `$.Records[0].eventSource` with `:` replaced by `.` | `aws.kinesis`    |
-| SNS              | `$.Records[0].eventSource` with `:` replaced by `.` | `aws.sns`        |
-| SQS              | `$.Records[0].eventSource` with `:` replaced by `.` | `aws.sqs`        |
+| AWS EventBridge  | `$.source`                                          | `/com.my.event`   |
+| AWS S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.s3`         |
+| CloudWatch Event | `$.source`                                          | `/com.my.event`   |
+| AWS CodeCommit   | `$.Records[0].eventSource`                          | `/aws.codecommit` |
+| DynamoDB         | `$.Records[0].eventSource`                          | `/aws.dynamodb`   |
+| EC2 Lifecycle    | `$.source`                                          | `/aws.ec2`        |
+| Kinesis          | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.kinesis`    |
+| SNS              | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.sns`        |
+| SQS              | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.sqs`        |
 
 
 
