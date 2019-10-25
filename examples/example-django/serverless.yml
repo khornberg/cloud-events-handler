@@ -1,0 +1,29 @@
+service: example-django
+provider:
+  name: aws
+  runtime: python3.7
+  region: us-east-2
+  environment:
+    WSGI_APPLICATION: project.wsgi.application
+
+custom:
+  pythonRequirements:
+    usePoetry: false
+    layer: true
+    fileName: requirements/base.txt
+
+functions:
+  customHandler:
+    handler: handler.custom_handler
+    layers:
+      - {Ref: PythonRequirementsLambdaLayer}
+  defaultHandler:
+    handler: cloud_events.handler.handler
+    layers:
+      - {Ref: PythonRequirementsLambdaLayer}
+    events:
+      - eventBridge:
+          schedule: rate(1 minute)
+
+plugins:
+  - serverless-python-requirements
