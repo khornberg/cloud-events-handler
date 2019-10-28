@@ -130,18 +130,31 @@ The default handler returns a dictionary.
 
 ## Event Path Mapping
 
-| Event            | Path Attribute                                      | WSGI Path        |
+| Event            | Path Attribute                                      | Dynamic WSGI Path |
 | ---------------- | --------------------------------------------------- | ---------------- |
 | CloudEvent       | `$.source`                                          | `/myContext`     |
 | AWS EventBridge  | `$.source`                                          | `/com.my.event`   |
-| AWS S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.s3`         |
 | CloudWatch Event | `$.source`                                          | `/com.my.event`   |
+| IOT Event        | `$.event.eventName`                                 | `/myChargedEvent`        |
+
+
+| Event            | Path Attribute                                      | Static WSGI Path        |
+| ---------------- | --------------------------------------------------- | ---------------- |
+| AWS S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.s3`         |
 | AWS CodeCommit   | `$.Records[0].eventSource`                          | `/aws.codecommit` |
 | DynamoDB         | `$.Records[0].eventSource`                          | `/aws.dynamodb`   |
 | EC2 Lifecycle    | `$.source`                                          | `/aws.ec2`        |
 | Kinesis          | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.kinesis`    |
 | SNS              | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.sns`        |
 | SQS              | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.sqs`        |
+| SES              | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.ses`        |
+| Lex              | `$.bot` and `$.outputDialogMode` and `$.currentIntent` | `/aws.lex`        |
+| Kinesis Firehose | `$.records[0].kinesisRecordMetadata` | `/aws.kinesis.firehose`        |
+| Cognito          | `$.identityId` and `$.identityPoolId` | `/aws.cognito`        |
+| Config           | `$.configRuleId` | `/aws.config`        |
+| CloudFront       | `$.Records[0].cf`                          | `/aws.cloudfront`   |
+| CloudFormation   | `$.LogicalResourceId`                          | `/aws.cloudformation`   |
+| Alexa   | `$.header` and `$.payload`                          | `/aws.alexa`   |
 
 
 

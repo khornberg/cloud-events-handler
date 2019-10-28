@@ -7,10 +7,29 @@ from .utils import import_string
 
 def get_path_for_event(event):
     path = ""
-    if event.get("Records") and event["Records"][0].get("eventSource"):
-        path = event["Records"][0].get("eventSource").replace(":", ".")
     if event.get("source"):
         path = event.get("source")
+    if event.get("event") and event["event"].get("eventName"):
+        path = event["event"].get("eventName")
+    if event.get("Records") and event["Records"][0].get("eventSource"):
+        path = event["Records"][0].get("eventSource").replace(":", ".")
+    if event.get("Records") and event["Records"][0].get("EventSource"):
+        path = event["Records"][0].get("EventSource").replace(":", ".")
+    if event.get('bot') and event.get('outputDialogMode') and event.get('currentIntent'):
+        path = 'aws.lex'
+    if event.get("records") and event["records"][0].get("kinesisRecordMetadata"):
+        path = "aws.kinesis.firehose"
+    if event.get("identityId") and event.get("identityPoolId"):
+        path = "aws.cognito"
+    if event.get("configRuleId"):
+        path = "aws.config"
+    if event.get("Records") and event["Records"][0].get("cf"):
+        path = "aws.cloudfront"
+    if event.get("LogicalResourceId"):
+        path = "aws.cloudformation"
+    if event.get("header") and event.get("payload"):
+        path = "aws.alexa"
+
     return "/{}".format(path.replace("/", "", 1))
 
 
