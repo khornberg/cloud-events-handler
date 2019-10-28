@@ -134,14 +134,15 @@ The default handler returns a dictionary.
 | ---------------- | --------------------------------------------------- | ---------------- |
 | CloudEvent       | `$.source`                                          | `/myContext`     |
 | AWS EventBridge  | `$.source`                                          | `/com.my.event`   |
-| CloudWatch Event | `$.source`                                          | `/com.my.event`   |
-| IOT Event        | `$.event.eventName`                                 | `/myChargedEvent`        |
+| AWS CloudWatch Event | `$.source`                                          | `/com.my.event`   |
+| AWS IOT Event    | `$.event.eventName`                                 | `/myChargedEvent`        |
 
+Events with a dynamic WSGI path mean that the path called in the WSGI application is dependent on the data in the event message at the path attribute specified.
 
-| Event            | Path Attribute                                      | Static WSGI Path        |
+| AWS Event        | Pattern Attributes                               | Static WSGI Path        |
 | ---------------- | --------------------------------------------------- | ---------------- |
-| AWS S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.s3`         |
-| AWS CodeCommit   | `$.Records[0].eventSource`                          | `/aws.codecommit` |
+| S3           | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.s3`         |
+| CodeCommit   | `$.Records[0].eventSource`                          | `/aws.codecommit` |
 | DynamoDB         | `$.Records[0].eventSource`                          | `/aws.dynamodb`   |
 | EC2 Lifecycle    | `$.source`                                          | `/aws.ec2`        |
 | Kinesis          | `$.Records[0].eventSource` with `:` replaced by `.` | `/aws.kinesis`    |
@@ -156,6 +157,42 @@ The default handler returns a dictionary.
 | CloudFormation   | `$.LogicalResourceId`                          | `/aws.cloudformation`   |
 | Alexa   | `$.header` and `$.payload`                          | `/aws.alexa`   |
 
+Events with a static WSGI path mean that the path called in the WSGI application is the same for each event matching the pattern. Some events are _essentially_ static since the route is defined by the message but that data is from AWS and unlikely to change.
+
+
+## Getting Started
+
+1. Clone this repo
+2. Install tox `pip install tox`
+3. Run tests `tox`
+
+All package code is in `src`
+
+## Frequently Asked Questions
+
+Does this have ASGI support?
+
+> No. It could be that was not the immediate need since ASGI is only supported in Django 3.0 and it turns off access to the database.
+
+Is the responses JSON serializable?
+
+> Yes. This is also to support SQS which needs a response from a lambda. The response code from the WSGI application is sent back in the default response i.e. a 500 in the WSGI app will then be sent to SQS if using the default handler.
+
+Does this have API Gateway/ALB support?
+
+> No. For now use other libraries as those are more fully featured.
+>
+> For AWS ALB and API Gateway events use [serverless-wsgi](https://github.com/logandk/serverless-wsgi), [zappa](https://github.com/Miserlou/Zappa), [awsgi](https://github.com/slank/awsgi) something else
+
+Does this encourage monolithic lambdas?
+
+> Maybe
+
+#### History
+
+This started out with the question, "Can we take an AWS event, in a generic way, and send it through to Django via a handler that makes full use of Django?"
+
+> Yes we can :)
 
 
 ## Flow
@@ -206,38 +243,3 @@ The default handler returns a dictionary.
          +-------------------------------------------+
 
 ```
-
-## Getting Started
-
-1. Clone this repo
-2. Install tox `pip install tox`
-3. Run tests `tox`
-
-All package code is in `src`
-
-## Frequently Asked Questions
-
-Does this have ASGI support?
-
-> No. It could be that was not the immediate need since ASGI is only supported in Django 3.0 and it turns off access to the database.
-
-Is the responses JSON serializable?
-
-> Yes. This is also to support SQS which needs a response from a lambda. The response code from the WSGI application is sent back in the default response i.e. a 500 in the WSGI app will then be sent to SQS if using the default handler.
-
-Does this have API Gateway/ALB support?
-
-> No. For now use other libraries as those are more fully featured.
->
-> For AWS ALB and API Gateway events use [serverless-wsgi](https://github.com/logandk/serverless-wsgi), [zappa](https://github.com/Miserlou/Zappa), [awsgi](https://github.com/slank/awsgi) something else
-
-Does this encourage monolithic lambdas?
-
-> Maybe
-
-#### History
-
-This started out with the question, "Can we take an AWS event, in a generic way, and send it through to Django via a handler that makes full use of Django?"
-
-> Yes we can :)
-
