@@ -15,8 +15,8 @@ def get_path_for_event(event):
         path = event["Records"][0].get("eventSource").replace(":", ".")
     if event.get("Records") and event["Records"][0].get("EventSource"):
         path = event["Records"][0].get("EventSource").replace(":", ".")
-    if event.get('bot') and event.get('outputDialogMode') and event.get('currentIntent'):
-        path = 'aws.lex'
+    if event.get("bot") and event.get("outputDialogMode") and event.get("currentIntent"):
+        path = "aws.lex"
     if event.get("records") and event["records"][0].get("kinesisRecordMetadata"):
         path = "aws.kinesis.firehose"
     if event.get("identityId") and event.get("identityPoolId"):
