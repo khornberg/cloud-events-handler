@@ -5,7 +5,7 @@ import os
 from .utils import import_string
 
 
-def get_path_for_event(event):
+def get_path_for_event(event):  # noqa C901
     path = ""
     if event.get("source"):
         path = event.get("source")
