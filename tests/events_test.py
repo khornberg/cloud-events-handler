@@ -3,10 +3,9 @@ import os
 
 import pytest
 from cloud_events.handler import handler
-
 from tests import events
 
-test_events = [getattr(events, e) for e in events.__dict__.keys() if not e.startswith('__')]
+test_events = [getattr(events, e) for e in events.__dict__.keys() if not e.startswith("__")]
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):

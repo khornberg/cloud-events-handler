@@ -29,6 +29,5 @@ urlpatterns = [
     path(r"aws.cloudfront", views.BookDelievery.as_view()),
     path(r"aws.cloudformation", views.BookDelievery.as_view()),
     path(r"aws.alexa", views.BookDelievery.as_view()),
-
     path(r"my/context", views.BookDelievery.as_view()),
 ]
