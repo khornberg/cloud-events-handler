@@ -2,7 +2,7 @@
 Send CloudEvents (and others) to a WSGI application
 
 ## Problem
-How do handle events from your cloud provider of choice with your WSGI application?
+How does a WSGI application handle events from the cloud provider of choice?
 
 _Events could be_
 * [CloudEvents](https://cloudevents.io/)
@@ -174,7 +174,7 @@ Does this have ASGI support?
 
 > No. It could be that was not the immediate need since ASGI is only supported in Django 3.0 and it turns off access to the database.
 
-Is the responses JSON serializable?
+Are the responses JSON serializable?
 
 > Yes. This is also to support SQS which needs a response from a lambda. The response code from the WSGI application is sent back in the default response i.e. a 500 in the WSGI app will then be sent to SQS if using the default handler.
 
