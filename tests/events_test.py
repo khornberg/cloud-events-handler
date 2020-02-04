@@ -3,7 +3,6 @@ import os
 
 import pytest
 from cloud_events.handler import handler
-
 from tests import events
 
 test_events = [getattr(events, e) for e in events.__dict__.keys() if not e.startswith("__")]
