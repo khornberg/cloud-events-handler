@@ -13,9 +13,9 @@ from setuptools import setup
 
 setup(
     name="cloud-events",
-    version="0.1.0",
+    version="0.2.0",
     license="MIT license",
-    description="Send CloudEvents (and AWS Events) to a WSGI application",
+    description="Send CloudEvents (and AWS Events) to an ASGI or WSGI application",
     author="Kyle Hornberg",
     author_email="kyle.hornberg@gmail.com",
     url="https://github.com/khornberg/cloud-events-handler",
@@ -36,6 +36,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: Implementation :: CPython",
         "Topic :: Utilities",
     ],

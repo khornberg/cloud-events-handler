@@ -2,7 +2,8 @@ import json
 import os
 
 import pytest
-from cloud_events import handler
+
+from src.cloud_events import handler
 
 
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):
@@ -21,7 +22,20 @@ django_environ = {"PATH_INFO": "/books/", "REQUEST_METHOD": "get"}
 django_app = "tests.django-app.project.wsgi.application"
 
 
-def test_handler():
+@pytest.fixture
+def delete_config():
+    try:
+        del os.environ["WSGI_APPLICATION"]
+        del os.environ["WSGI_ENVIRON"]
+    except KeyError:
+        pass
+    try:
+        del os.environ["ASGI_APPLICATION"]
+    except KeyError:
+        pass
+
+
+def test_handler(delete_config):
     os.environ["WSGI_APPLICATION"] = "wsgiref.simple_server.demo_app"
     expected = "Hello world!"
     response = handler.handler(event, context)
@@ -56,3 +70,21 @@ def test_wsgi_with_headers():
 def test_handler_response_is_json_compatible():
     os.environ["WSGI_APPLICATION"] = django_app
     assert json.dumps(handler.handler(event, context))
+
+
+def test_handler_for_asgi(delete_config):
+    os.environ["ASGI_APPLICATION"] = "tests.asgi-app.app"
+    expected = "Hello, world! I'm from an ASGI world"
+    response = handler.handler(event, context)
+    assert_response(response)
+    assert response["body"] == expected
+
+
+def test_handler_with_starlette(delete_config):
+    os.environ["ASGI_APPLICATION"] = "tests.starlette-app.application"
+    expected = json.dumps({"data": []})
+    expected_headers = {
+        "content-length": "11",
+        "content-type": "application/vnd.api+json",
+    }
+    assert_response(handler.handler(event, context), expected, expected_headers=expected_headers)

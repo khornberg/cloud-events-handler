@@ -2,7 +2,8 @@ import json
 import os
 
 import pytest
-from cloud_events.handler import handler
+
+from src.cloud_events.handler import handler
 from tests import events
 
 test_events = [getattr(events, e) for e in events.__dict__.keys() if not e.startswith("__")]
@@ -11,8 +12,9 @@ test_events = [getattr(events, e) for e in events.__dict__.keys() if not e.start
 def assert_response(response, expected_body="", expected_status_code=200, **kwargs):
     headers = response["headers"]
     assert response["status_code"] == expected_status_code
-    if headers.get("Content-Type") in ["application/json"]:
-        assert json.loads(response["body"]) == expected_body
+    if headers.get("Content-Type", headers.get("content-type")) in ["application/json"]:
+        got = json.loads(response["body"])
+        assert got == expected_body
     else:
         assert response["body"] == expected_body
     if kwargs.get("expected_headers"):
@@ -20,6 +22,7 @@ def assert_response(response, expected_body="", expected_status_code=200, **kwar
 
 
 django_app = "tests.django-app.project.wsgi.application"
+starlette_app = "tests.starlette-app.application"
 
 
 @pytest.mark.django_db
@@ -43,3 +46,17 @@ def test_events(event_payload):
     os.environ["WSGI_APPLICATION"] = django_app
     event = expected = event_payload
     assert_response(handler(event, {}), expected, 201)
+
+
+def test_aws_s3_file_added_event_to_asgi():
+    try:
+        del os.environ["WSGI_APPLICATION"]
+    except KeyError:
+        pass
+    os.environ["ASGI_APPLICATION"] = starlette_app
+    event = expected = events.s3_example_event
+    expected_headers = {
+        "content-type": "application/json",
+        "content-length": "810",
+    }
+    assert_response(handler(event, {}), expected, 201, expected_headers=expected_headers)
