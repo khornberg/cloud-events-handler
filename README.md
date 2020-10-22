@@ -1,8 +1,11 @@
 # cloud-events-handler
-Send CloudEvents (and others) to a WSGI application
+Send CloudEvents (and others) to an ASGI or WSGI application
+
+`cloud-events-handler` converts CloudEvents and other vendor specific events into ASGI/WSGI calls for your applications
+
 
 ## Problem
-How does a WSGI application handle events from the cloud provider of choice?
+How does an ASGI/WSGI application handle events from the cloud provider of choice?
 
 _Events could be_
 * [CloudEvents](https://cloudevents.io/)
@@ -66,7 +69,10 @@ In this example instead of reacting only to an API Gateway or ALB event, we can 
 
 Two settings are used to configure the cloud-event handler.
 
-**Required** `WSGI_APPLICATION` points to the python path of the WSGI application.
+**Required**
+- `WSGI_APPLICATION` points to the python path of the WSGI application
+- `ASGI_APPLICATION` points to the python path of the ASGI application
+
 
 *Optional* `WSGI_ENVIRON` points to the python path of a module and is expected to end at a dictionary.
 
@@ -121,9 +127,9 @@ The default handler returns a dictionary.
 
 ```
 {
-    "status_code": response.status_code,
-    "body": response.get_data(as_text=True),
-    "headers": dict(response.headers),
+    "status_code": status_code <str>,
+    "body": body <str>,
+    "headers": headers <dict>,
 }
 ```
 
@@ -172,7 +178,7 @@ All package code is in `src`
 
 Does this have ASGI support?
 
-> No. It could be that was not the immediate need since ASGI is only supported in Django 3.0 and it turns off access to the database.
+> Yes
 
 Are the responses JSON serializable?
 
@@ -182,7 +188,13 @@ Does this have API Gateway/ALB support?
 
 > No. For now use other libraries as those are more fully featured.
 >
-> For AWS ALB and API Gateway events use [serverless-wsgi](https://github.com/logandk/serverless-wsgi), [zappa](https://github.com/Miserlou/Zappa), [awsgi](https://github.com/slank/awsgi) something else
+> This uses the same class the [mangum](https://github.com/jordaneremieff/mangum) uses. If the app is ASGI that is a well suited library for API gateway events
+>
+> For AWS ALB and API Gateway events [serverless-wsgi](https://github.com/logandk/serverless-wsgi), [zappa](https://github.com/Miserlou/Zappa), or [awsgi](https://github.com/slank/awsgi) are good options
+
+Are the URLs I add to handle the events also callable?
+
+> The urls used for events __could__ also be called via HTTP if they are exposed on an API Gateway
 
 Does this encourage monolithic lambdas?
 
@@ -230,14 +242,14 @@ This started out with the question, "Can we take an AWS event, in a generic way,
          |          +---------------------+          |
          |          |Interface            |          |
          |          |                     |          |
-         |          |Interfaces for WSGI  |          |
+         |          |Interfaces for A/WSGI|          |
          |          +---------------------+          |
          |                     |                     |
          |                     v                     |
          |          +---------------------+          |
          |          |Application          |          |
          |          |                     |          |
-         |          |Any WSGI application |          |
+         |          |A/WSGI application   |          |
          |          +---------------------+          |
          |                                           |
          +-------------------------------------------+

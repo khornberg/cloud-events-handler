@@ -64,3 +64,23 @@ def get_wsgi_environ(event):
     if event:
         environ["PATH_INFO"] = get_path_for_event(event)
     return environ
+
+
+def get_asgi_scope(event, context):
+    headers = {k.lower(): v for k, v in event.get("headers").items()} if event.get("headers") else {}
+    return {
+        "type": "http",
+        "http_version": "1.1",
+        "method": "POST",
+        "headers": [[k.encode(), v.encode()] for k, v in headers.items()],
+        "path": get_path_for_event(event),
+        "raw_path": None,
+        "root_path": "",
+        "scheme": "https",
+        "query_string": "",
+        "server": "localhost",
+        "client": "",
+        "asgi": {"version": "3.0"},
+        "aws.event": event,
+        "aws.context": context,
+    }

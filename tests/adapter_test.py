@@ -1,7 +1,8 @@
 import os
 
 import pytest
-from cloud_events import adapter
+
+from src.cloud_events import adapter
 
 environ = {"TEST": "Thing"}
 
