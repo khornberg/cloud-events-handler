@@ -1,7 +1,5 @@
 from .adapter import get_wsgi_environ
-from .interface import get_app
-from .interface import get_asgi_response
-from .interface import get_wsgi_response
+from .interface import get_app, get_asgi_response, get_wsgi_response
 
 
 def handler(event, context):
@@ -16,8 +14,9 @@ def handler(event, context):
         }
     if app_type == "ASGI":
         response = get_asgi_response(app, event, context)
+        headers = {header[0].decode("utf-8"): header[1].decode("utf-8") for header in response["headers"]}
         return {
-            "status_code": response["statusCode"],
-            "body": response["body"],
-            "headers": response["headers"],
+            "status_code": response["status"],
+            "body": response["body"].decode("utf-8"),
+            "headers": headers,
         }

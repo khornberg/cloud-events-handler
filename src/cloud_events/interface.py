@@ -7,13 +7,6 @@ from werkzeug.wrappers import Response
 from .adapter import get_asgi_scope
 from .utils import import_string
 
-DEFAULT_TEXT_MIME_TYPES = [
-    "application/json",
-    "application/javascript",
-    "application/xml",
-    "application/vnd.api+json",
-]
-
 
 def get_wsgi_response(app, environ):
     return Response.from_app(app, environ)
@@ -34,6 +27,6 @@ def get_app():
 def get_asgi_response(app, event, context):
     scope = get_asgi_scope(event, context)
     body = json.dumps(event).encode()
-    asgi_cycle = HTTPCycle(scope, body=body, text_mime_types=DEFAULT_TEXT_MIME_TYPES)
+    asgi_cycle = HTTPCycle(scope, body=body)
     response = asgi_cycle(app)
     return response

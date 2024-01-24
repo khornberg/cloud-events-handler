@@ -48,13 +48,13 @@ def get_wsgi_environ(event):
         "SCRIPT_NAME": "",
         "SERVER_NAME": "localhost",
         "SERVER_PORT": "80",
-        "SERVER_PROTOCOL": str("HTTP/1.1"),
-        "wsgi.input": None,
+        "SERVER_PROTOCOL": "HTTP/1.1",
         "wsgi.version": (1, 0),
         "wsgi.run_once": False,
         "wsgi.multiprocess": False,
         "wsgi.multithread": False,
         "wsgi.url_scheme": "http",
+        "wsgi.input": io.BytesIO(b""),
     }
     environ = {**default_environ, **get_user_environ()}
     if environ["REQUEST_METHOD"].lower() == "post":

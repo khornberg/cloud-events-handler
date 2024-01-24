@@ -60,8 +60,11 @@ def test_wsgi_with_headers():
         "Content-Type": "application/vnd.api+json",
         "Vary": "Accept, Cookie",
         "Allow": "GET, POST, HEAD, OPTIONS",
-        "X-Frame-Options": "SAMEORIGIN",
+        "X-Frame-Options": "DENY",
         "Content-Length": "11",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
     }
     assert_response(handler.handler(event, context), expected, expected_headers=expected_headers)
 

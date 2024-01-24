@@ -1,5 +1,3 @@
-import json
-
 from cloud_events.handler import handler
 
 

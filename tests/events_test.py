@@ -33,8 +33,11 @@ def test_aws_s3_file_added_event():
         "Content-Type": "application/json",
         "Vary": "Accept, Cookie",
         "Allow": "POST, OPTIONS",
-        "X-Frame-Options": "SAMEORIGIN",
+        "X-Frame-Options": "DENY",
         "Content-Length": "810",
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "same-origin",
+        "Cross-Origin-Opener-Policy": "same-origin",
     }
     assert_response(handler(event, {}), expected, 201, expected_headers=expected_headers)
 
@@ -42,7 +45,6 @@ def test_aws_s3_file_added_event():
 @pytest.mark.django_db
 @pytest.mark.parametrize("event_payload", test_events)
 def test_events(event_payload):
-    print(event_payload)
     os.environ["WSGI_APPLICATION"] = django_app
     event = expected = event_payload
     assert_response(handler(event, {}), expected, 201)

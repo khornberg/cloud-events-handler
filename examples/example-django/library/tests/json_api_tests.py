@@ -2,9 +2,8 @@ import json
 from datetime import datetime
 
 from django.test import TestCase
-from library.models import Author
-from library.models import Book
-from library.models import PaperSource
+
+from library.models import Author, Book, PaperSource
 
 
 class TestBook(TestCase):
@@ -91,7 +90,7 @@ class TestBook(TestCase):
     def test_use_sorting(self):
         Author.objects.create(first_name="First", last_name="A")
         Author.objects.create(first_name="First", last_name="Z")
-        response = self.client.get(f"/authors/?sort=last_name", HTTP_ACCEPT="application/vnd.api+json")
+        response = self.client.get("/authors/?sort=last_name", HTTP_ACCEPT="application/vnd.api+json")
         content = json.loads(response.content)
         self.assertEqual("A", content["data"][0]["attributes"]["last_name"])
         self.assertEqual("Z", content["data"][1]["attributes"]["last_name"])
@@ -99,7 +98,7 @@ class TestBook(TestCase):
     def test_use_sorting_descending(self):
         Author.objects.create(first_name="First", last_name="A")
         Author.objects.create(first_name="First", last_name="Z")
-        response = self.client.get(f"/authors/?sort=-last_name", HTTP_ACCEPT="application/vnd.api+json")
+        response = self.client.get("/authors/?sort=-last_name", HTTP_ACCEPT="application/vnd.api+json")
         content = json.loads(response.content)
         self.assertEqual("Z", content["data"][0]["attributes"]["last_name"])
         self.assertEqual("A", content["data"][1]["attributes"]["last_name"])
