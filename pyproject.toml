@@ -1,6 +1,6 @@
 [project]
 name = "cloud-events"
-version = "0.2.0"
+version = "0.3.0"
 license = { text = "MIT license" }
 description = "Send CloudEvents (and AWS Events) to an ASGI or WSGI application"
 authors = [
@@ -23,12 +23,11 @@ classifiers = [
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Utilities",
 ]
-
+requires-python = ">=3.8"
 dependencies = [
     "werkzeug>=0.16.0",
     "mangum>=0.17.0,<0.18.0"
 ]
-
 
 [project.urls]
 Homepage = "https://github.com/khornberg/cloud-events-handler"
@@ -86,15 +85,3 @@ precision = 2
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
-
-packages = "src"
-# package_dir={"": "src"},
-# py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
-include_package_data = true
-zip_safe = false
-# install_requires=open("requirements/base.txt").readlines(),
-# extras_require={},
-
-
-[tool.distutils.bdist_wheel]
-universal = true

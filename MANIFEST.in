@@ -1,5 +1,4 @@
 graft src
-graft tests
 graft requirements
 
 include .coveragerc
@@ -9,4 +8,4 @@ include *.sh
 include *.toml
 include *.cfg
 
-global-exclude *.py[cod] __pycache__ *.so *.dylib .github .github/*
+global-exclude *.py[cod] __pycache__ *.so *.dylib .github .github/* tests/*
