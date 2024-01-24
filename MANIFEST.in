@@ -3,9 +3,7 @@ graft tests
 graft requirements
 
 include .coveragerc
-
 include README.md
-include tox.ini
 include *.json
 include *.sh
 include *.toml

@@ -1,6 +1,44 @@
+[project]
+name = "cloud-events"
+version = "0.2.0"
+license = { text = "MIT license" }
+description = "Send CloudEvents (and AWS Events) to an ASGI or WSGI application"
+authors = [
+  {name = "Kyle Hornberg", email = "kyle.hornberg@gmail.com"}
+]
+readme = "README.md"
+keywords = [ "cloudevents", "serverless", "wsgi", "asgi", "aws", "azure" ]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Unix",
+    "Operating System :: POSIX",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Utilities",
+]
+
+dependencies = [
+    "werkzeug>=0.16.0",
+    "mangum>=0.17.0,<0.18.0"
+]
+
+
+[project.urls]
+Homepage = "https://github.com/khornberg/cloud-events-handler"
+Documentation = "https://github.com/khornberg/cloud-events-handler"
+Repository = "https://github.com/khornberg/cloud-events-handler.git"
+
+
 [tool.black]
 line-length = 120
-target-version = ['py36']
+target-version = ['py38']
 
 [tool.isort]
 force_single_line = true
@@ -12,3 +50,51 @@ multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
+
+[tool.pytest.ini_options]
+testpaths = [ "src" ]
+norecursedirs = [
+    "migrations",
+]
+python_files = [
+    "test_*.py",
+    "*_test.py",
+    "*_tests.py",
+    "tests.py",
+]
+addopts = [
+    "-ra",
+    "--strict",
+    "--doctest-modules",
+    "--doctest-glob=*.rst",
+    "--tb=short",
+    "--ds=tests.django-app.project.settings.base",
+]
+
+[tool.coverage.run]
+branch = true
+source = [
+    "src",
+    "tests/django-app/library"
+]
+parallel = true
+
+[tool.coverage.report]
+show_missing = true
+precision = 2
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+packages = "src"
+# package_dir={"": "src"},
+# py_modules=[splitext(basename(path))[0] for path in glob("src/*.py")],
+include_package_data = true
+zip_safe = false
+# install_requires=open("requirements/base.txt").readlines(),
+# extras_require={},
+
+
+[tool.distutils.bdist_wheel]
+universal = true

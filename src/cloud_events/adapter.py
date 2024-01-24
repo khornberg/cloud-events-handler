@@ -55,6 +55,7 @@ def get_wsgi_environ(event):
         "wsgi.multiprocess": False,
         "wsgi.multithread": False,
         "wsgi.url_scheme": "http",
+        "wsgi.input": io.BytesIO(b""),
     }
     environ = {**default_environ, **get_user_environ()}
     if environ["REQUEST_METHOD"].lower() == "post":

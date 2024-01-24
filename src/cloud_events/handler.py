@@ -16,8 +16,9 @@ def handler(event, context):
         }
     if app_type == "ASGI":
         response = get_asgi_response(app, event, context)
+        headers = {header[0].decode('utf-8'):header[1].decode('utf-8') for header in response["headers"]}
         return {
-            "status_code": response["statusCode"],
-            "body": response["body"],
-            "headers": response["headers"],
+            "status_code": response["status"],
+            "body": response["body"].decode('utf-8'),
+            "headers": headers,
         }
