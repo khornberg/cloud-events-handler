@@ -49,7 +49,6 @@ def get_wsgi_environ(event):
         "SERVER_NAME": "localhost",
         "SERVER_PORT": "80",
         "SERVER_PROTOCOL": str("HTTP/1.1"),
-        "wsgi.input": None,
         "wsgi.version": (1, 0),
         "wsgi.run_once": False,
         "wsgi.multiprocess": False,

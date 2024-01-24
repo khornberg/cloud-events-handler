@@ -179,3 +179,5 @@ typings/
 
 # aws cloud development kit
 cdk.out
+
+.ruff_cache/

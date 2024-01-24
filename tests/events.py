@@ -343,7 +343,7 @@ lex_event = {
     "outputDialogMode": "Text",
     "currentIntent": {
         "name": "my-intent",
-        "slots": {"slot-name": "value", "slot-name": "value", "slot-name": "value"},
+        "slots": {"slot-name": "value"},
         "confirmationStatus": "Confirmed",
     },
 }
