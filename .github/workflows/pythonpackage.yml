@@ -4,23 +4,28 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 3
       matrix:
-        python-version: [3.6, 3.7, 3.8]
-
+        python-version: [3.8, 3.11, 3.12]
+        django-version: ["4.2.9"]
+        starlette-version: ["0.36.1"]
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }} Django ${{ matrix.django-version }} Starlette ${{ matrix.starlette-version }}
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install tox
-    - name: Run tox
+        pip install django==${{ matrix.django-version }}
+        pip install starlette==${{ matrix.starlette-version }}
+        pip install -r requirements/test.txt
+        pip install -r tests/django-app/requirements/base.txt
+        pip install -e .
+        echo "PYTHONPATH=$PYTHONPATH:$PWD/tests/django-app" >> $GITHUB_ENV
+    - name: Run tests
       run: |
-        tox
+        pytest --cache-clear tests -vv --cov
