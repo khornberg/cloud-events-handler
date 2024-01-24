@@ -1,7 +1,6 @@
-from library.models import Author
-from library.models import Book
-from library.models import PaperSource
 from rest_framework_json_api import serializers
+
+from library.models import Author, Book, PaperSource
 
 
 class AuthorSerializer(serializers.ModelSerializer):

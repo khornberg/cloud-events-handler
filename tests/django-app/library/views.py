@@ -1,12 +1,8 @@
-from library.models import Author
-from library.models import Book
-from library.models import PaperSource
-from library.serializers import AuthorSerializer
-from library.serializers import BookSerializer
-from library.serializers import PaperSourceSerializer
-from rest_framework import generics
-from rest_framework import viewsets
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
+
+from library.models import Author, Book, PaperSource
+from library.serializers import AuthorSerializer, BookSerializer, PaperSourceSerializer
 
 
 class AuthorViewSet(viewsets.ModelViewSet):

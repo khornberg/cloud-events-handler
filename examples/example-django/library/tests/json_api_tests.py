@@ -2,9 +2,8 @@ import json
 from datetime import datetime
 
 from django.test import TestCase
-from library.models import Author
-from library.models import Book
-from library.models import PaperSource
+
+from library.models import Author, Book, PaperSource
 
 
 class TestBook(TestCase):

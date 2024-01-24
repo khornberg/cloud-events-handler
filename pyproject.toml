@@ -34,6 +34,9 @@ Homepage = "https://github.com/khornberg/cloud-events-handler"
 Documentation = "https://github.com/khornberg/cloud-events-handler"
 Repository = "https://github.com/khornberg/cloud-events-handler.git"
 
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 120
@@ -82,6 +85,24 @@ parallel = true
 show_missing = true
 precision = 2
 
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+[tool.ruff]
+line-length = 120
+select = ["C90", "I", "E", "F", "UP"]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "build",
+    "dist",
+    "venv",
+]
+
+[tool.ruff.mccabe]
+max-complexity = 10

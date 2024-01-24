@@ -1,7 +1,5 @@
 from .adapter import get_wsgi_environ
-from .interface import get_app
-from .interface import get_asgi_response
-from .interface import get_wsgi_response
+from .interface import get_app, get_asgi_response, get_wsgi_response
 
 
 def handler(event, context):
